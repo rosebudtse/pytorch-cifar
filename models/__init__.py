@@ -8,11 +8,11 @@ from .googlenet import *
 from .shufflenet import *
 from .shufflenetv2 import *
 from .resnet import *
-from .resnext import *
+from .resnext_jier import *
 from .preact_resnet import *
 from .mobilenet import *
 from .mobilenetv2 import *
 from .efficientnet import *
-from .regnet import *
+from .regnet_jier import *
 from .dla_simple import *
 from .dla import *
