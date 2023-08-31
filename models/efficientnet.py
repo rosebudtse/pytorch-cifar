@@ -105,13 +105,13 @@ class Block(nn.Module):
 
 
 class EfficientNet(nn.Module):
-    def __init__(self, cfg, num_classes=10):
+    def __init__(self, cfg, num_classes=9):
         super(EfficientNet, self).__init__()
         self.cfg = cfg
         self.conv1 = nn.Conv2d(3,
                                32,
                                kernel_size=3,
-                               stride=1,
+                               stride=2,
                                padding=1,
                                bias=False)
         self.bn1 = nn.BatchNorm2d(32)
@@ -164,12 +164,36 @@ def EfficientNetB0():
     return EfficientNet(cfg)
 
 
+def EfficientNetB3():
+    cfg = {
+        'num_blocks': [1, 2, 2, 3, 5, 6, 1],
+        'expansion': [1, 6, 6, 6, 6, 6, 6],
+        'out_channels': [24, 32, 48, 96, 136, 232, 384],
+        'kernel_size': [3, 3, 5, 3, 5, 5, 3],
+        'stride': [2, 2, 2, 2, 1, 2, 1],
+        'dropout_rate': 0.3,
+        'drop_connect_rate': 0.2,
+    }
+    return EfficientNet(cfg)
+
+def EfficientNetB5():
+    cfg = {
+        'num_blocks': [3, 5, 5, 7, 7, 8, 3],
+        'expansion': [1, 6, 6, 6, 6, 6, 6],
+        'out_channels': [24, 40, 64, 128, 176, 604, 512],
+        'kernel_size': [3, 3, 5, 5, 5, 5, 3],
+        'stride': [2, 2, 2, 2, 1, 2, 1],
+        'dropout_rate': 0.3,
+        'drop_connect_rate': 0.2,
+    }
+    return EfficientNet(cfg)
+
 def test():
-    net = EfficientNetB0()
-    x = torch.randn(2, 3, 32, 32)
+    net = EfficientNetB5()
+    x = torch.randn(2, 3, 512, 512)
     y = net(x)
     print(y.shape)
 
 
-if __name__ == '__main__':
-    test()
+
+# test()
