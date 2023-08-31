@@ -1,3 +1,10 @@
+'''
+
+此文件用来读取模型，检查模型的性能和各项参数
+
+'''
+
+
 import torch
 
 # 指定.pth模型文件的路径
@@ -12,4 +19,3 @@ epoch = model['epoch']
 optimizer = model['optimizer']
 
 print(f"Epoch: {epoch}\nLoss:{loss}\nAcc: {acc}\nOptimizer: {optimizer}")
-# print(f"Epoch: {epoch}\nAcc: {acc}\nOptimizer: {optimizer}")
