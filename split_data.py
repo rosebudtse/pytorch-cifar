@@ -1,14 +1,20 @@
+'''
+
+此文件用来切分数据集和训练集，默认比例为0.8:0.2
+
+'''
+
 import os
 import random
 import shutil
 
-# 设置随机种子，以确保每次运行结果一致
+# 设置随机种子，以确保每次运行结果一致，我只是为了测试，如果有新数据集的话可以去掉
 random.seed(42)
 
 # 指定数据集文件夹路径
-dataset_folder = r"e:\users\XieZF02\Desktop\dataset"
+dataset_folder = r"../dataset"
 
-train_set_folder = r'e:\users\XieZF02\Desktop\train_test'
+train_set_folder = r'../train_test'
 
 # 指定训练集和测试集比例
 train_ratio = 0.8
