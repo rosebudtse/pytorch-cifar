@@ -1,5 +1,20 @@
-from PIL import Image
+'''
 
+此文件用来制定分类的修正误判
+
+以脏污为例，在gt为脏污的图片被误判成正常的文件中：
+如果：
+    正常的置信度 < k1
+    脏污的脏污置信度 > k2
+那么这张被误判为正常的文件就会修正为脏污
+
+这只是一个简单的算法，只要大于小于这两个值就修正，你也可以尝试更复杂的触发条件
+
+
+'''
+
+
+from PIL import Image
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -66,14 +81,16 @@ count = 0
 fix_count = 0
 z_count = 0
 z_count_fix = 0
+# 置信度1
 k1 = 0.7
+# 置信度2
 k2 = 0.24
 top3_min_daguang = float('-inf')  # 初始化top-3中最高的daguang数值
 
 daguang_value=[]
 daguang_percentage = []
 
-daguang_dir = r'train_test/test/zangwu'  # daguang文件夹路径
+daguang_dir = r'train_test/test/zangwu'  # 你想测试的类的文件夹路径
 file_count = len(os.listdir(daguang_dir))
 for filename in os.listdir(daguang_dir):
     image_path = os.path.join(daguang_dir, filename)
@@ -113,8 +130,7 @@ for filename in os.listdir(daguang_dir):
         print(f'{labels[indices[0][2].item()]}: {top3_values[0][2] / torch.sum(top3_values) * 100:.2f}%')        
         z_count +=1
 #         print('first label:',first_label)
-#         if '6' in indices:#如果top3标签中有脏污
-        if labels.index('zangwu') in indices[0]:
+        if labels.index('zangwu') in indices[0]:# 如果Top-3中有脏污
 #         if second_label == 'zangwu':#判断top-2是否为脏污
             # 找到索引位置
             zangwu_index = torch.nonzero(torch.eq(indices[0], labels.index('zangwu')))[0][0]
